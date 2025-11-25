@@ -4,9 +4,6 @@
     android:padding="16dp"
     android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/txt_steps"
-        android:text="걸음 수: 0"
-        android:textSize="18sp" />
+    <TextView android:id="@+id/txt_steps" android:text="걸음 수: 0" android:textSize="18sp" />
 
 </LinearLayout>

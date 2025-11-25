@@ -22,10 +22,10 @@ class StepProvider extends ChangeNotifier {
       int v = 0;
       try {
         final res = await _ch.invokeMethod<dynamic>('getSteps');
-        print('res=$res');
-        if (res is int)
+        // print('res=$res');
+        if (res is int) {
           v = res;
-        else if (res is String)
+        } else if (res is String)
           v = int.tryParse(res) ?? 0;
       } catch (e) {
         if (kDebugMode) print('StepProvider native getSteps error: $e');
@@ -36,14 +36,9 @@ class StepProvider extends ChangeNotifier {
         } catch (_) {}
       }
       // DEBUG: 콘솔에 값 출력
-      if (kDebugMode)
-        print(
-          'StepProvider poll: raw steps from prefs=$v, todaySteps=$todaySteps',
-        );
       if (v != todaySteps) {
         todaySteps = v;
         notifyListeners();
-        if (kDebugMode) print('StepProvider updated: todaySteps=$todaySteps');
       }
     });
   }
