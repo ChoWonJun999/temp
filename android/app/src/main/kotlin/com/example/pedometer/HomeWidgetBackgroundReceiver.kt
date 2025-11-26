@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.Intent
 import es.antonborri.home_widget.HomeWidgetBackgroundReceiver as PluginReceiver
 
-/**
- * Public receiver that forwards to the plugin receiver, then refreshes our widget.
- */
+/** Public receiver that forwards to the plugin receiver, then refreshes our widget. */
 class HomeWidgetBackgroundReceiver : BroadcastReceiver() {
     private val delegate = PluginReceiver()
 

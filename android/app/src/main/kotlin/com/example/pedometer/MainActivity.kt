@@ -12,7 +12,9 @@ class MainActivity : FlutterFragmentActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
+                call,
+                result ->
             when (call.method) {
                 "startService" -> {
                     val intent = Intent(this, StepForegroundService::class.java)
@@ -30,7 +32,11 @@ class MainActivity : FlutterFragmentActivity() {
                 }
                 "getSteps" -> {
                     try {
-                        val prefs = getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE)
+                        val prefs =
+                                getSharedPreferences(
+                                        "FlutterSharedPreferences",
+                                        Context.MODE_PRIVATE
+                                )
                         val steps = prefs.getInt("steps", 0)
                         result.success(steps)
                     } catch (e: Exception) {

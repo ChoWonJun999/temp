@@ -10,7 +10,6 @@ import android.hardware.SensorManager
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -43,14 +42,17 @@ class StepForegroundService : Service(), SensorEventListener {
         stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
         android.util.Log.d("StepForegroundService", "stepSensor=$stepSensor")
         createNotificationChannel()
-        val n: Notification = NotificationCompat.Builder(this, "step_channel")
-            .setContentTitle("걸음 수 수집 중")
-            .setContentText("앱이 종료되어도 걸음 수를 수집합니다.")
-            .setSmallIcon(android.R.drawable.ic_menu_compass)
-            .setOngoing(true)
-            .build()
+        val n: Notification =
+                NotificationCompat.Builder(this, "step_channel")
+                        .setContentTitle("걸음 수 수집 중")
+                        .setContentText("??? 걸음")
+                        .setSmallIcon(android.R.drawable.ic_menu_compass)
+                        .setOngoing(true)
+                        .build()
         startForeground(1001, n)
-        stepSensor?.let { sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL) }
+        stepSensor?.let {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
+        }
     }
 
     override fun onDestroy() {
@@ -75,7 +77,10 @@ class StepForegroundService : Service(), SensorEventListener {
         val steps = max(0f, value - (initialCount ?: value)).toInt()
 
         prefs.edit().putInt(KEY_STEPS, steps).apply()
-        android.util.Log.d("StepForegroundService", "onSensorChanged[$today]: initialCount=$initialCount, steps=$steps, raw=$value")
+        android.util.Log.d(
+                "StepForegroundService",
+                "onSensorChanged[$today]: initialCount=$initialCount, steps=$steps, raw=$value"
+        )
 
         StepAppWidgetProvider.triggerUpdate(this)
     }
@@ -83,7 +88,13 @@ class StepForegroundService : Service(), SensorEventListener {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val nm = getSystemService(NotificationManager::class.java)
-            nm?.createNotificationChannel(NotificationChannel("step_channel", "걸음 수 수집", NotificationManager.IMPORTANCE_LOW))
+            nm?.createNotificationChannel(
+                    NotificationChannel(
+                            "step_channel",
+                            "걸음 수 수집",
+                            NotificationManager.IMPORTANCE_LOW
+                    )
+            )
         }
     }
 }
