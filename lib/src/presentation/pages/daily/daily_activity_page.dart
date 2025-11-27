@@ -1,11 +1,8 @@
-import 'package:app/src/presentation/pages/daily/widgets/circulat_step_summary.dart';
-import 'package:app/src/presentation/pages/daily/widgets/day_selector_row.dart';
-import 'package:app/src/presentation/pages/daily/widgets/ranking_widget.dart';
-import 'package:app/src/presentation/pages/daily/widgets/summary_stat_row.dart';
+import 'package:app/src/presentation/widgets/circular_step_card.dart';
 import 'package:app/src/presentation/widgets/common_card.dart';
-import 'package:app/src/providers/step_provider.dart';
+import 'package:app/src/presentation/widgets/date_navigator_bar.dart';
+import 'package:app/src/presentation/widgets/ranking_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DailyActivityPage extends StatelessWidget {
   const DailyActivityPage({super.key});
@@ -19,13 +16,57 @@ class DailyActivityPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CommonCard(child: DaySelectorRow()),
+              CommonCard(
+                children: [
+                  DateNavigatorBar(
+                    // 날짜가 변경될 때마다 실행되는 콜백 함수
+                    onDateChanged: (newDate) {
+                      print(
+                        "선택된 새로운 날짜: ${newDate.year}-${newDate.month}-${newDate.day}",
+                      );
+                      // 이곳에 새로운 날짜에 맞는 데이터를 불러오는 로직을 작성합니다.
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  CircularStepCard(),
+                ],
+              ),
+
               SizedBox(height: 16),
-              _CircularStepCard(),
+              Row(
+                children: [
+                  Expanded(
+                    child: CommonCard(
+                      children: [
+                        _SummaryCard(title: "활동걸음", value: "6,412", unit: "걸음"),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: CommonCard(
+                      children: [
+                        _SummaryCard(title: "활동거리", value: "36.3", unit: "Km"),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: CommonCard(
+                      children: [
+                        _SummaryCard(
+                          title: "소모열량",
+                          value: "1,677",
+                          unit: "칼로리",
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
               SizedBox(height: 16),
-              CommonCard(child: SummaryStatRow()),
-              SizedBox(height: 16),
-              CommonCard(child: RankingWidget()),
+              CommonCard(children: [RankingWidget()]),
             ],
           ),
         ),
@@ -34,37 +75,26 @@ class DailyActivityPage extends StatelessWidget {
   }
 }
 
-/// 🔥 CircularStepSummary 연결 카드 위젯
-class _CircularStepCard extends StatefulWidget {
-  const _CircularStepCard();
+class _SummaryCard extends StatelessWidget {
+  final String title;
+  final String value;
+  final String unit;
 
-  @override
-  State<_CircularStepCard> createState() => _CircularStepCardState();
-}
+  const _SummaryCard({
+    required this.title,
+    required this.value,
+    required this.unit,
+  });
 
-class _CircularStepCardState extends State<_CircularStepCard> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Consumer<StepProvider>(
-        builder: (context, stepProv, _) {
-          final steps = stepProv.todaySteps;
-          return CommonCard(
-            child: SizedBox(
-              height: 200,
-              child: Center(
-                child: steps == 0
-                    ? const Text(
-                        '걸음 데이터가 없습니다.\n기기에서 센서가 활성화되어 있는지 확인하세요.',
-                        textAlign: TextAlign.center,
-                      )
-                    : CircularStepSummary(steps: steps, goal: 10000),
-              ),
-            ),
-          );
-        },
-      ),
+    return Column(
+      children: [
+        Text(title),
+        const SizedBox(height: 4),
+        Text(value, textScaleFactor: 2),
+        Text(unit),
+      ],
     );
   }
 }

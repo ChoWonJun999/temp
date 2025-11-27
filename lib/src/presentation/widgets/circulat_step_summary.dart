@@ -12,8 +12,10 @@ class CircularStepSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double progress =
-        (steps / goal).clamp(0.0, 1.0); // 0~1 사이로 제한 (안전한 계산)
+    final double progress = (steps / goal).clamp(
+      0.0,
+      1.0,
+    ); // 0~1 사이로 제한 (안전한 계산)
 
     return SizedBox(
       width: 200,
@@ -47,18 +49,12 @@ class CircularStepSummary extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 "걸음수",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.grey[600]),
               ),
               const SizedBox(height: 8),
               Text(
                 "목표: $goal",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[500],
-                ),
+                style: TextStyle(fontSize: 12, color: Colors.grey[500]),
               ),
             ],
           ),

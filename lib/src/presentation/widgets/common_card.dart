@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CommonCard extends StatelessWidget {
-  final Widget child;
+  final List<Widget> children;
   final EdgeInsetsGeometry padding;
   final Color backgroundColor;
   final double borderRadius;
 
   const CommonCard({
     super.key,
-    required this.child,
+    required this.children,
     this.padding = const EdgeInsets.all(16),
     this.backgroundColor = Colors.white,
     this.borderRadius = 12,
@@ -25,12 +25,12 @@ class CommonCard extends StatelessWidget {
         boxShadow: const [
           BoxShadow(
             color: Colors.black12,
-            blurRadius: 4,
+            blurRadius: 10,
             offset: Offset(0, 2),
           ),
         ],
       ),
-      child: child,
+      child: Column(children: children),
     );
   }
 }

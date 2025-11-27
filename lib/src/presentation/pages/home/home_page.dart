@@ -28,9 +28,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 setState(() => currentTab = i);
               },
             ),
-            Expanded(
-              child: _buildTabContent(),
-            ),
+            Expanded(child: _buildTabContent()),
           ],
         ),
       ),

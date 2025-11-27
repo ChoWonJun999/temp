@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH" />
 
     <application android:label="pedometer"
         android:name="${applicationName}"
@@ -17,7 +18,9 @@
 
         <!-- ForegroundService 선언 -->
         <service android:name=".StepForegroundService"
-            android:exported="false" />
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="health" />
 
         <!-- BOOT 리시버 (재부팅 시 서비스 자동 시작) -->
         <receiver android:name=".BootReceiver"
