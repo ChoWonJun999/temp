@@ -23,14 +23,15 @@ class GundoriCollectPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
-                    7,
-                    (i) => Container(
-                          width: 30,
-                          height: 30,
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          color: Colors.grey.shade300,
-                        )),
-              )
+                  7,
+                  (i) => Container(
+                    width: 30,
+                    height: 30,
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    color: Colors.grey.shade300,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -79,11 +80,7 @@ class GundoriCollectPage extends StatelessWidget {
         // (5) 하단 안내 문구
         Container(
           padding: const EdgeInsets.only(bottom: 16),
-          child: Container(
-            width: 250,
-            height: 16,
-            color: Colors.grey.shade300,
-          ),
+          child: Container(width: 250, height: 16, color: Colors.grey.shade300),
         ),
       ],
     );

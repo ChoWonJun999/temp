@@ -26,6 +26,7 @@ class StepProvider extends ChangeNotifier {
         if (res is int) {
           v = res;
         } else if (res is String)
+          // ignore: curly_braces_in_flow_control_structures
           v = int.tryParse(res) ?? 0;
       } catch (e) {
         if (kDebugMode) print('StepProvider native getSteps error: $e');

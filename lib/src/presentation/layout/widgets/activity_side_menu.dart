@@ -81,13 +81,10 @@ class ActivitySideMenu extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             color: const Color(0xFF00A8CC),
             width: double.infinity,
-            child: const Text(
-              "걷기",
-              style: TextStyle(fontSize: 16),
-            ),
+            child: const Text("걷기", style: TextStyle(fontSize: 16)),
           ),
           const SizedBox(height: 12),
-          _menuItem("걷기 활동", MainScreenType.home),
+          _menuItem("걷기 활동", MainScreenType.walkingActivity),
           _menuItem("걷돌이 모으기", MainScreenType.gundori),
 
           const SizedBox(height: 24),
@@ -96,14 +93,11 @@ class ActivitySideMenu extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             color: const Color(0xFF00A8CC),
             width: double.infinity,
-            child: const Text(
-              "커뮤니티",
-              style: TextStyle(fontSize: 16),
-            ),
+            child: const Text("커뮤니티", style: TextStyle(fontSize: 16)),
           ),
           const SizedBox(height: 12),
-          _menuItem("기타 메뉴 1", MainScreenType.home),
-          _menuItem("기타 메뉴 2", MainScreenType.home),
+          _menuItem("기타 메뉴 1", MainScreenType.walkingActivity),
+          _menuItem("기타 메뉴 2", MainScreenType.walkingActivity),
         ],
       ),
     );
@@ -121,10 +115,7 @@ class ActivitySideMenu extends StatelessWidget {
           color: Colors.grey.shade200,
           borderRadius: BorderRadius.circular(6),
         ),
-        child: Text(
-          label,
-          style: const TextStyle(fontSize: 16),
-        ),
+        child: Text(label, style: const TextStyle(fontSize: 16)),
       ),
     );
   }

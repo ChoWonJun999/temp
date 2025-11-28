@@ -1,14 +1,17 @@
 import 'package:app/src/presentation/layout/widgets/activity_side_menu.dart';
 import 'package:app/src/presentation/pages/gundori/gundori_collect_page.dart';
-import 'package:app/src/presentation/pages/home/home_page.dart';
+import 'package:app/src/presentation/pages/walking_activity/walking_activity_page.dart';
 import 'package:flutter/material.dart';
 
-enum MainScreenType { home, gundori }
+enum MainScreenType { walkingActivity, gundori }
 
 class ShellLayout extends StatefulWidget {
   final MainScreenType initialScreen;
 
-  const ShellLayout({super.key, this.initialScreen = MainScreenType.home});
+  const ShellLayout({
+    super.key,
+    this.initialScreen = MainScreenType.walkingActivity,
+  });
 
   @override
   State<ShellLayout> createState() => _ShellLayoutState();
@@ -16,7 +19,7 @@ class ShellLayout extends StatefulWidget {
 
 class _ShellLayoutState extends State<ShellLayout> {
   bool isMenuOpen = false;
-  MainScreenType currentScreen = MainScreenType.home;
+  MainScreenType currentScreen = MainScreenType.walkingActivity;
   String currentTitle = "걷기 활동";
 
   @override
@@ -75,8 +78,8 @@ class _ShellLayoutState extends State<ShellLayout> {
   /// 화면 매핑
   Widget _buildScreen() {
     switch (currentScreen) {
-      case MainScreenType.home:
-        return const HomePage();
+      case MainScreenType.walkingActivity:
+        return const WalkingActivityPage();
       case MainScreenType.gundori:
         return const GundoriCollectPage();
     }

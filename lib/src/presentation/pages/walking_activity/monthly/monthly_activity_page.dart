@@ -5,8 +5,6 @@ class MonthlyActivityPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("월간 화면"),
-    );
+    return const Center(child: Text("월간 화면"));
   }
 }

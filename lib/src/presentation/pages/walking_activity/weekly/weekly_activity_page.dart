@@ -5,8 +5,6 @@ class WeeklyActivityPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("주간 화면"),
-    );
+    return const Center(child: Text("주간 화면"));
   }
 }

@@ -15,10 +15,8 @@ Future<void> main() async {
   if (status.isGranted) {
     await ForegroundService.start();
   }
-  // 앱 시작 시 사용할 Provider 인스턴스 생성
   final stepProvider = StepProvider();
 
-  // 런타임 권한 요청(시작 시)
   try {
     final current = await Permission.activityRecognition.status;
     if (!current.isGranted) {
@@ -29,7 +27,6 @@ Future<void> main() async {
     print('permission check error: $e');
   }
 
-  // 권한 여부와 상관없이 초기 데이터 로드 시도 (플러그인에서 권한 없으면 예외 처리될 수 있음)
   try {
     await stepProvider.loadTodaySteps();
     print('initial loadTodaySteps done, steps=${stepProvider.todaySteps}');
@@ -40,7 +37,6 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        // 미리 생성한 인스턴스를 사용 -> 초기 로드된 상태가 바로 반영됨
         ChangeNotifierProvider<StepProvider>.value(value: stepProvider),
       ],
       child: const MyApp(),
@@ -53,17 +49,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return MaterialApp(
       home: ShellLayout(),
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en', ''), // English, no country code
-        Locale('ko', ''), // Korean, no country code
-      ],
+      locale: Locale('ko', 'KR'),
+      supportedLocales: [Locale('en', 'US'), Locale('ko', 'KR')],
+      theme: ThemeData(
+        textTheme: TextTheme(
+          // 기본 스타일 추후 추가
+        ),
+        useMaterial3: true,
+      ),
     );
   }
 }
