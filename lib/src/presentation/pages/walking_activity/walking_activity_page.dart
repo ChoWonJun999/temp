@@ -2,7 +2,7 @@ import 'package:app/src/config/app_colors.dart';
 import 'package:app/src/presentation/pages/walking_activity/daily/daily_activity_page.dart';
 import 'package:app/src/presentation/pages/walking_activity/monthly/monthly_activity_page.dart';
 import 'package:app/src/presentation/pages/walking_activity/weekly/weekly_activity_page.dart';
-import 'package:app/src/presentation/widgets/date_navigator_bar.dart';
+import 'package:app/src/presentation/widgets/date/date_navigator_bar.dart';
 import 'package:app/src/presentation/widgets/tabs/tab.dart';
 import 'package:app/src/presentation/widgets/tabs/tab_config.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +22,7 @@ class _WalkingActivityPageState extends State<WalkingActivityPage>
     AppTab(title: "일", child: DailyActivityPage()),
     AppTab(title: "주", child: WeeklyActivityPage()),
     AppTab(title: "월", child: MonthlyActivityPage()),
+    AppTab(title: "연", child: MonthlyActivityPage()),
   ];
 
   @override
@@ -32,13 +33,15 @@ class _WalkingActivityPageState extends State<WalkingActivityPage>
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 DateNavigatorBar(
                   onDateChanged: (newDate) {
                     // 날짜가 변경될 때마다 실행되는 콜백 함수
                   },
                 ),
-                Expanded(
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                   child: CommonTabs(
                     tabItemType: TabItemType.button,
                     tabs: _tabs,

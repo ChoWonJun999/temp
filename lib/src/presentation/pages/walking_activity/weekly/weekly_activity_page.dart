@@ -1,3 +1,4 @@
+import 'package:app/src/presentation/widgets/date/week_selector.dart';
 import 'package:flutter/material.dart';
 
 class WeeklyActivityPage extends StatelessWidget {
@@ -5,6 +6,7 @@ class WeeklyActivityPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("주간 화면"));
+    return Scaffold(body: Center(child: WeekPickerExample()));
+    ;
   }
 }

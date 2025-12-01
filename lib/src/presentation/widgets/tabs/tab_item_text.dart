@@ -2,7 +2,6 @@ import 'package:app/src/config/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class TabItemText extends StatelessWidget {
-  final int index;
   final String title;
   final bool isSelected;
   final VoidCallback onTap;
@@ -14,7 +13,6 @@ class TabItemText extends StatelessWidget {
 
   const TabItemText({
     super.key,
-    required this.index,
     required this.title,
     required this.isSelected,
     required this.onTap,

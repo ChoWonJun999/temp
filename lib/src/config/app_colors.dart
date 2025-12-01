@@ -63,3 +63,5 @@ const Color kNeutralGray = Color(0xFF9E9E9E);
 
 /// 아주 밝은 회색 (카드 또는 컨테이너 배경)
 const Color kLightGray = Color(0xFFEEEEEE);
+
+const Color kTransparent = Colors.transparent;
