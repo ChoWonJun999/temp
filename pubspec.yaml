@@ -22,11 +22,10 @@ dependencies:
   pedometer: ^4.1.1
   home_widget: ^0.8.1
   shared_preferences: ^2.1.0
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
-    sdk: flutter
-  flutter_localizations:
     sdk: flutter
 
   flutter_lints: ^6.0.0
