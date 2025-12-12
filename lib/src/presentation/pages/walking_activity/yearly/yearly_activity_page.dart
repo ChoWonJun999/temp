@@ -5,8 +5,8 @@ import 'package:app/src/presentation/widgets/date/date_selector.dart';
 import 'package:app/src/presentation/widgets/ranking_widget.dart';
 import 'package:flutter/material.dart';
 
-class WeeklyActivityPage extends StatelessWidget {
-  const WeeklyActivityPage({super.key});
+class YearlyActivityPage extends StatelessWidget {
+  const YearlyActivityPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class WeeklyActivityPage extends StatelessWidget {
             children: [
               CommonCard(
                 children: [
-                  DatePicker(pickerType: PickerType.week),
+                  DatePicker(pickerType: PickerType.year),
                   CircularStepCard(),
                 ],
               ),

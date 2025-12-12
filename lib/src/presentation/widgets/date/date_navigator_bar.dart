@@ -1,3 +1,5 @@
+import 'package:app/src/presentation/utils/date/picker_type.dart';
+import 'package:app/src/presentation/widgets/date/date_selector.dart';
 import 'package:flutter/material.dart';
 
 class DateNavigatorBar extends StatefulWidget {
@@ -5,6 +7,7 @@ class DateNavigatorBar extends StatefulWidget {
   final bool isGoToButton;
   final DateTime? initialDate;
   final double? sizeFactor;
+  final PickerType pickerType;
 
   const DateNavigatorBar({
     super.key,
@@ -12,6 +15,7 @@ class DateNavigatorBar extends StatefulWidget {
     this.isGoToButton = true,
     this.initialDate,
     this.sizeFactor,
+    required this.pickerType,
   });
 
   @override
@@ -125,18 +129,20 @@ class _DateNavigatorBarState extends State<DateNavigatorBar> {
               onPressed: _goToPrevious,
             ),
 
-          InkWell(
-            onTap: () => _selectDate(context),
-            borderRadius: BorderRadius.circular(4.0 * _currentSizeFactor),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: _paddingHorizontal,
-                vertical: _paddingVertical,
-              ),
-              child: centerContent,
-            ),
-          ),
+          // 버튼 기능 연동 필요
+          DatePicker(pickerType: widget.pickerType),
 
+          // InkWell(
+          //   onTap: () => _selectDate(context),
+          //   borderRadius: BorderRadius.circular(4.0 * _currentSizeFactor),
+          //   child: Padding(
+          //     padding: EdgeInsets.symmetric(
+          //       horizontal: _paddingHorizontal,
+          //       vertical: _paddingVertical,
+          //     ),
+          //     child: centerContent,
+          //   ),
+          // ),
           if (widget.isGoToButton)
             IconButton(
               icon: Icon(Icons.arrow_forward_ios_sharp, size: _arrowIconSize),

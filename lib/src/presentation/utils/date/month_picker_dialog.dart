@@ -52,18 +52,6 @@ class _MonthPickerDialogState extends State<MonthPickerDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // 1. 헤더 (선택된 연도 및 월 표시)
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                '$_currentYear년 $_selectedMonth월',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
             // 2. 연도 이동 버튼
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

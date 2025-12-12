@@ -1,5 +1,7 @@
+import 'package:app/src/presentation/utils/date/picker_type.dart';
 import 'package:app/src/presentation/widgets/circular_step_card.dart';
 import 'package:app/src/presentation/widgets/common_card.dart';
+import 'package:app/src/presentation/widgets/date/date_selector.dart';
 import 'package:app/src/presentation/widgets/ranking_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -15,18 +17,15 @@ class DailyActivityPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CommonCard(children: [CircularStepCard()]),
+              CommonCard(
+                children: [
+                  DatePicker(pickerType: PickerType.day),
+                  CircularStepCard(),
+                ],
+              ),
               SizedBox(height: 16),
               Row(
                 children: [
-                  Expanded(
-                    child: CommonCard(
-                      children: [
-                        _SummaryCard(title: "활동걸음", value: "6,412", unit: "걸음"),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 12),
                   Expanded(
                     child: CommonCard(
                       children: [
@@ -38,6 +37,7 @@ class DailyActivityPage extends StatelessWidget {
                   Expanded(
                     child: CommonCard(
                       children: [
+                        _SummaryCard(title: "활동거리", value: "36.3", unit: "Km"),
                         _SummaryCard(
                           title: "소모열량",
                           value: "1,677",

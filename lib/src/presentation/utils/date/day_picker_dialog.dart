@@ -1,3 +1,4 @@
+import 'package:app/src/presentation/utils/date/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -72,13 +73,7 @@ class _DayPickerDialogState extends State<DayPickerDialog> {
       0,
     );
 
-    // 주의 시작일 계산 (이 코드가 작동하려면 getStartOfWeek 함수가 필요합니다.)
-    DateTime getStartOfWeek(DateTime date) {
-      int weekday = date.weekday;
-      return date.subtract(Duration(days: weekday - 1));
-    }
-
-    final startCalendarDay = getStartOfWeek(firstDayOfMonth);
+    final startCalendarDay = MyDateUtils.getStartOfWeek(firstDayOfMonth);
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
@@ -88,18 +83,6 @@ class _DayPickerDialogState extends State<DayPickerDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // 1. 헤더 (YYYY년 MM월 DD일)
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                DateFormat('yyyy년 MM월 dd일').format(_selectedDate),
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
             // 2. 월 이동 및 현재 월 표시 (WeekPickerDialog와 동일)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

@@ -63,20 +63,6 @@ class _YearPickerDialogState extends State<YearPickerDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // 1. 헤더 (선택된 연도 표시)
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                '$_selectedYear년',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-            const Divider(height: 1),
-
             // 2. 년도 리스트 (스크롤)
             SizedBox(
               height: 300, // 스크롤 가능한 영역 높이 지정

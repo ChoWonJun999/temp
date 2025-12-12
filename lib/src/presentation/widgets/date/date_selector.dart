@@ -1,4 +1,3 @@
-// 상위 유틸리티 함수와 PickerType enum을 임포트합니다.
 import 'package:app/src/presentation/utils/date/date_utils.dart';
 import 'package:app/src/presentation/utils/date/picker_type.dart';
 import 'package:app/src/presentation/utils/date/show_date_picker_util.dart';
@@ -9,12 +8,18 @@ class DatePicker extends StatefulWidget {
   final PickerType pickerType;
   final Color? color;
   final bool useWeekNumberFormat;
+  final bool isGoToButton;
+  final double? sizeFactor;
+  final ValueChanged<DateTime>? onDateChanged;
 
   const DatePicker({
     super.key,
     required this.pickerType,
     this.color = Colors.black,
-    this.useWeekNumberFormat = true,
+    this.useWeekNumberFormat = false,
+    this.isGoToButton = true,
+    this.sizeFactor,
+    this.onDateChanged,
   });
 
   @override
@@ -23,6 +28,15 @@ class DatePicker extends StatefulWidget {
 
 class _DatePickerState extends State<DatePicker> {
   late DateTimeRange _selectedRange;
+
+  static const double _defaultSizeFactor = 1.0;
+  double get _currentSizeFactor => widget.sizeFactor ?? _defaultSizeFactor;
+  double get _iconSize => 20.0 * _currentSizeFactor;
+  double get _arrowIconSize => 15.0 * _currentSizeFactor;
+  double get _fontSize => 15.0 * _currentSizeFactor;
+  double get _paddingHorizontal => 0 * _currentSizeFactor;
+  double get _paddingVertical => 0 * _currentSizeFactor;
+  double get _spacing => 0.1 * _currentSizeFactor;
 
   @override
   void initState() {
@@ -37,8 +51,8 @@ class _DatePickerState extends State<DatePicker> {
       case PickerType.day:
         return DateTimeRange(start: today, end: today);
       case PickerType.week:
-        final start = getStartOfWeek(today);
-        final end = getEndOfWeek(today);
+        final start = MyDateUtils.getStartOfWeek(today);
+        final end = MyDateUtils.getEndOfWeek(today);
         return DateTimeRange(start: start, end: end);
       case PickerType.month:
         final firstDayOfMonth = DateTime(today.year, today.month, 1);
@@ -70,7 +84,7 @@ class _DatePickerState extends State<DatePicker> {
     final firstDayOfMonth = DateTime(startOfWeek.year, month, 1);
 
     // 월의 1일이 속한 주(월요일)
-    final startOfFirstWeek = getStartOfWeek(firstDayOfMonth);
+    final startOfFirstWeek = MyDateUtils.getStartOfWeek(firstDayOfMonth);
 
     // 주의 시작일과 월의 첫 주 시작일 사이의 일수 차이
     final daysDifference = startOfWeek.difference(startOfFirstWeek).inDays;
@@ -87,9 +101,9 @@ class _DatePickerState extends State<DatePicker> {
     if (start.isAtSameMomentAs(end)) {
       switch (widget.pickerType) {
         case PickerType.day:
-          return DateFormat('MM월 dd일').format(start);
+          return DateFormat('M월 d일').format(start);
         case PickerType.month:
-          return DateFormat('yyyy년 MM월').format(start);
+          return DateFormat('yyyy년 M월').format(start);
         case PickerType.year:
           return DateFormat('yyyy년').format(start);
         case PickerType.week:
@@ -104,7 +118,7 @@ class _DatePickerState extends State<DatePicker> {
         return DateFormat('MM월').format(start) + ' $weekNumber주차';
       } else {
         // 💡 형식 2: MM.dd ~ MM.dd (기존 날짜 범위)
-        return '${DateFormat('MM.dd').format(start)} ~ ${DateFormat('MM.dd').format(end)}';
+        return '${DateFormat('M월 d일').format(start)} ~ ${DateFormat('M월 d일').format(end)}';
       }
     }
 
@@ -112,25 +126,71 @@ class _DatePickerState extends State<DatePicker> {
     return '';
   }
 
+  void _goToPrevious() {
+    setState(() {
+      _selectedRange = MyDateUtils.getPreviousRange(
+        widget.pickerType,
+        _selectedRange,
+      );
+      widget.onDateChanged?.call(
+        _selectedRange.start,
+      ); // onDateChanged 호출은 시작 날짜를 전달
+    });
+  }
+
+  void _goToNext() {
+    setState(() {
+      _selectedRange = MyDateUtils.getNextRange(
+        widget.pickerType,
+        _selectedRange,
+      );
+      widget.onDateChanged?.call(
+        _selectedRange.start,
+      ); // onDateChanged 호출은 시작 날짜를 전달
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _pickDate,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: 8.0,
+          vertical: widget.isGoToButton ? 0 : 12.0,
+        ),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: widget.isGoToButton
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.start,
+          mainAxisSize: widget.isGoToButton
+              ? MainAxisSize.max
+              : MainAxisSize.min,
           children: [
-            Icon(Icons.calendar_month, color: widget.color, size: 24),
-            const SizedBox(width: 8),
-            Text(
-              _getDisplayText(),
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: widget.color,
+            if (widget.isGoToButton)
+              IconButton(
+                icon: Icon(Icons.arrow_back_ios_sharp, size: _arrowIconSize),
+                onPressed: _goToPrevious,
               ),
+            Row(
+              children: [
+                Icon(Icons.calendar_month, color: widget.color, size: 24),
+                const SizedBox(width: 8),
+                Text(
+                  _getDisplayText(),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: widget.color,
+                  ),
+                ),
+              ],
             ),
+            if (widget.isGoToButton)
+              IconButton(
+                icon: Icon(Icons.arrow_forward_ios_sharp, size: _arrowIconSize),
+                onPressed: _goToNext,
+              ),
           ],
         ),
       ),

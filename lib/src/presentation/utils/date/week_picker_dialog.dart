@@ -31,16 +31,16 @@ class _WeekPickerDialogState extends State<WeekPickerDialog> {
   @override
   void initState() {
     super.initState();
-    _selectedStart = getStartOfWeek(widget.initialDate);
-    _selectedEnd = getEndOfWeek(widget.initialDate);
+    _selectedStart = MyDateUtils.getStartOfWeek(widget.initialDate);
+    _selectedEnd = MyDateUtils.getEndOfWeek(widget.initialDate);
     _currentMonth = _selectedStart;
   }
 
   // 날짜를 선택했을 때 주 범위를 업데이트하는 함수
   void _selectWeek(DateTime date) {
     setState(() {
-      _selectedStart = getStartOfWeek(date);
-      _selectedEnd = getEndOfWeek(date);
+      _selectedStart = MyDateUtils.getStartOfWeek(date);
+      _selectedEnd = MyDateUtils.getEndOfWeek(date);
       _currentMonth = date;
     });
   }
@@ -71,7 +71,7 @@ class _WeekPickerDialogState extends State<WeekPickerDialog> {
       0,
     );
     // 달력 시작일 (이번 달 1일이 포함된 주의 월요일)
-    final startCalendarDay = getStartOfWeek(firstDayOfMonth);
+    final startCalendarDay = MyDateUtils.getStartOfWeek(firstDayOfMonth);
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
@@ -81,18 +81,6 @@ class _WeekPickerDialogState extends State<WeekPickerDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // 1. 헤더 (YYYY년 MM월 DD일 - YYYY년 MM월 DD일)
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                '${DateFormat('yyyy년 MM월 dd일').format(_selectedStart)} - ${DateFormat('MM월 dd일').format(_selectedEnd)}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
             // 2. 월 이동 및 현재 월 표시
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
